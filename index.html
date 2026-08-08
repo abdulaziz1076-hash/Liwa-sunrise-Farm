@@ -468,16 +468,22 @@
             overflow: hidden;
             aspect-ratio: 4 / 3;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
         }
 
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: 0.4s;
+            transition: transform 0.5s ease;
         }
 
-        .gallery-item:hover img { transform: scale(1.08); }
+        .gallery-item:hover img { transform: scale(1.06); }
 
         /* ---------- REVIEWS ---------- */
         .reviews-grid {
@@ -671,6 +677,11 @@
             .nav-links.open { right: 0; }
             .hamburger { display: flex; }
             .hero { min-height: 75vh; }
+            .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
         }
     </style>
 </head>
@@ -791,7 +802,7 @@
             <div class="rooms-grid">
                 <!-- غرفة 1 -->
                 <div class="room-card">
-                    <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=600&q=80" alt="غرفة 1">
+                    <img src="images/895165148.jpg" alt="الغرفة رقم 1" loading="lazy">
                     <div class="room-card-body">
                         <h4>الغرفة رقم 1 (الجناح الخاص)</h4>
                         <p>1 سرير King + سرير أريكة، حمام خاص ومسبح خاص مع إطلالة بانورامية وتكييف كامل.</p>
@@ -802,7 +813,7 @@
 
                 <!-- غرفة 2 -->
                 <div class="room-card">
-                    <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=600&q=80" alt="غرفة 2">
+                    <img src="images/895166872.jpg" alt="الغرفة رقم 2" loading="lazy">
                     <div class="room-card-body">
                         <h4>الغرفة رقم 2 (العائلية)</h4>
                         <p>3 أسرة مفردة + 4 أسرة مفردة، صالة واسعة ومطبخ مجهز بالكامل يناسب العائلات الكبيرة.</p>
@@ -813,7 +824,7 @@
 
                 <!-- غرفة 3 -->
                 <div class="room-card">
-                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=600&q=80" alt="غرفة 3">
+                    <img src="images/895165191.jpg" alt="الغرفة رقم 3" loading="lazy">
                     <div class="room-card-body">
                         <h4>الغرفة رقم 3 (الفيلا الملكية)</h4>
                         <p>مسبح خاص كبير، أسرة متنوعة، مجلس فاخر، وجلسة خارجية للشواء.</p>
@@ -825,18 +836,16 @@
         </section>
     </main>
 
-    <!-- ===== PAGE 4: GALLERY (معرض الصور) ===== -->
+    <!-- ===== PAGE 4: GALLERY (معرض الصور - محدث بالكامل) ===== -->
     <main id="page-gallery" class="page-section">
         <section class="container">
             <div class="text-center">
                 <span class="section-label"><i class="fas fa-camera"></i> معرض الصور</span>
                 <h2 class="section-title">جولة في <span>أرجاء المزرعة</span></h2>
+                <p class="section-sub mx-auto">استمتع بمشاهدة أكثر من 80 صورة حقيقية للمزرعة، الغرف، المسابح، والمرافق</p>
             </div>
-            <div class="gallery-grid" style="margin-top: 2rem;">
-                <div class="gallery-item"><img src="https://q-xx.bstatic.com/xdata/images/hotel/840x460/834427233.jpg?k=1af0930fe8ad1974bb7ee796611f8ae3dcd27792a1091de08f9068317d26c51c&o=&s=1024x" alt="صورة 1"></div>
-                <div class="gallery-item"><img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/895166872.jpg?k=8c1553eef6a03aeefd6f3e5d2a62d3fde7f7f2450ca7db7a25cad764426b130d&o=" alt="صورة 2"></div>
-                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80" alt="صورة 3"></div>
-                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80" alt="صورة 4"></div>
+            <div class="gallery-grid" id="galleryGrid" style="margin-top: 2rem;">
+                <!-- سيتم إنشاء عناصر المعرض بواسطة JavaScript -->
             </div>
         </section>
     </main>
@@ -861,6 +870,12 @@
                     <div class="author">Faizal</div>
                     <div class="from">Google Reviews</div>
                 </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"أفضل مكان للاسترخاء بعيداً عن صخب المدينة. الأناقة والهدوء في آن واحد."</blockquote>
+                    <div class="author">Mukhtar</div>
+                    <div class="from">Booking.com</div>
+                </div>
             </div>
         </section>
     </main>
@@ -871,22 +886,23 @@
             <div class="text-center">
                 <span class="section-label"><i class="fas fa-award"></i> مكافآت الضيوف</span>
                 <h2 class="section-title">برنامج <span>الولاء والمكافآت</span></h2>
+                <p class="section-sub mx-auto">كلما زادت لياليك، زادت مكافآتك – استمتع بخصومات وهدايا حصرية</p>
             </div>
             <div class="amenities-grid" style="margin-top: 2rem;">
                 <div class="amenity-card">
                     <i class="fas fa-medal" style="color: #cd7f32;"></i>
                     <h4>المستوى البرونزي</h4>
-                    <p>من 1 - 4 ليالي (خصم 5% على الخدمات)</p>
+                    <p>من 1 - 4 ليالي<br><small>خصم 5% على الخدمات الإضافية</small></p>
                 </div>
                 <div class="amenity-card">
                     <i class="fas fa-medal" style="color: #c0c0c0;"></i>
                     <h4>المستوى الفضي</h4>
-                    <p>من 5 - 10 ليالي (خصم 10% + تسجيل وصول مبكر)</p>
+                    <p>من 5 - 10 ليالي<br><small>خصم 10% + تسجيل وصول مبكر</small></p>
                 </div>
                 <div class="amenity-card">
                     <i class="fas fa-crown" style="color: #ffd700;"></i>
                     <h4>المستوى الذهبي</h4>
-                    <p>أكثر من 10 ليالي (خصم 15% + ليلة مجانية)</p>
+                    <p>أكثر من 10 ليالي<br><small>خصم 15% + ليلة مجانية + مشروب ترحيبي</small></p>
                 </div>
             </div>
         </section>
@@ -1007,29 +1023,77 @@
 
     <!-- ===== JAVASCRIPT LOGIC ===== -->
     <script>
-        // SINGLE PAGE APPLICATION (SPA) NAVIGATION
+        // ------------------------------------------------------------
+        // 1. IMAGE LIST – جميع أسماء الصور المحلية (تم تنظيفها من النصوص الإضافية)
+        // ------------------------------------------------------------
+        const imageFiles = [
+            "831598306.jpg", "831598593.jpg", "831598609.jpg", "831598626.jpg",
+            "831598641.jpg", "831598653.jpg", "831598665.jpg", "831598682.jpg",
+            "831598692.jpg", "831598699.jpg", "831598709.jpg", "831598726.jpg",
+            "831598744.jpg", "831598771.jpg", "831598805.jpg", "831693564.jpg",
+            "831693567.jpg", "831693581.jpg", "831876387.jpg", "831876390.jpg",
+            "834427233.jpg", "835734520.jpg", "835734528.jpg", "835825172.jpg",
+            "835827222.jpg", "838828793.jpg", "840158283.jpg", "840161121.jpg",
+            "851636031.jpg", "852229376.jpg", "867220609.jpg", "867220622.jpg",
+            "868205412.jpg", "868205417.jpg", "868205426.jpg", "868205473.jpg",
+            "868205502.jpg", "874085736.jpg", "895165128.jpg", "895165148.jpg",
+            "895165178.jpg", "895165191.jpg", "895165231.jpg", "895165257.jpg",
+            "895165273.jpg", "895165281.jpg", "895165289.jpg", "895165302.jpg",
+            "895165349.jpg", "895165361.jpg", "895165379 (1).jpg", "895165379.jpg",
+            "895165395 (1).jpg", "895165395.jpg", "895165413 (1).jpg", "895165413.jpg",
+            "895165429 (1).jpg", "895165429.jpg", "895165470 (1).jpg", "895165470.jpg",
+            "895165482.jpg", "895165572 (1).jpg", "895165572.jpg", "895166632 (1).jpg",
+            "895166632.jpg", "895166748.jpg", "895166755.jpg", "895166764.jpg",
+            "895166779.jpg", "895166806.jpg", "895166831.jpg", "895166841.jpg",
+            "895166859.jpg", "895166872.jpg", "895166875.jpg", "895166889.jpg",
+            "895205611.jpg", "895205711.jpg", "895206063.jpg", "895391452.jpg",
+            "895391463.jpg", "895393429.jpg", "895393785.jpg", "896027964.jpg",
+            "896224268.jpg", "896224290.jpg", "896224291.jpg", "896224306.jpg",
+            "897055643.jpg", "897055652.jpg", "898662190.jpg", "898662239.jpg",
+            "staticmap.png"
+        ];
+
+        // ------------------------------------------------------------
+        // 2. BUILD GALLERY – إنشاء عناصر المعرض ديناميكياً
+        // ------------------------------------------------------------
+        function buildGallery() {
+            const galleryGrid = document.getElementById('galleryGrid');
+            if (!galleryGrid) return;
+
+            // إفراغ الحاوية (في حال تكرار الاستدعاء)
+            galleryGrid.innerHTML = '';
+
+            imageFiles.forEach(filename => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+
+                const img = document.createElement('img');
+                img.src = 'images/' + filename;
+                img.alt = filename.replace(/\.[^/.]+$/, ''); // إزالة الامتداد للوصف
+                img.loading = 'lazy';
+
+                item.appendChild(img);
+                galleryGrid.appendChild(item);
+            });
+        }
+
+        // استدعاء بناء المعرض عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', buildGallery);
+
+        // ------------------------------------------------------------
+        // 3. SINGLE PAGE APPLICATION (SPA) NAVIGATION
+        // ------------------------------------------------------------
         function navigateTo(pageId) {
-            // Hide all pages
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active-section'));
-            // Remove active style from navbar links
             document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active-link'));
 
-            // Show selected page
             const targetPage = document.getElementById('page-' + pageId);
-            if (targetPage) {
-                targetPage.classList.add('active-section');
-            }
+            if (targetPage) targetPage.classList.add('active-section');
 
-            // Highlight nav link
             const targetLink = document.getElementById('link-' + pageId);
-            if (targetLink) {
-                targetLink.classList.add('active-link');
-            }
+            if (targetLink) targetLink.classList.add('active-link');
 
-            // Close mobile menu if open
             document.getElementById('navLinks').classList.remove('open');
-            
-            // Scroll top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1037,8 +1101,11 @@
             document.getElementById('navLinks').classList.toggle('open');
         }
 
-        // CURRENCY CONVERSION LOGIC
+        // ------------------------------------------------------------
+        // 4. CURRENCY CONVERSION
+        // ------------------------------------------------------------
         const rates = { AED: 1, USD: 0.27, EUR: 0.25 };
+
         function changeCurrency() {
             const curr = document.getElementById('globalCurrency').value;
             const rate = rates[curr];
@@ -1050,7 +1117,9 @@
             });
         }
 
-        // BOOKING LOGIC
+        // ------------------------------------------------------------
+        // 5. BOOKING LOGIC
+        // ------------------------------------------------------------
         function bookSpecificRoom(roomId) {
             navigateTo('booking');
             document.getElementById('bookRoom').value = roomId;
@@ -1058,13 +1127,13 @@
         }
 
         function calcBookingTotal() {
-            const checkIn = new Date(document.getElementById('checkIn').value);
-            const checkOut = new Date(document.getElementById('checkOut').value);
+            const checkIn = document.getElementById('checkIn').value;
+            const checkOut = document.getElementById('checkOut').value;
             const roomSelect = document.getElementById('bookRoom');
             const pricePerNight = parseFloat(roomSelect.options[roomSelect.selectedIndex].getAttribute('data-price'));
 
-            if (checkIn && checkOut && checkOut > checkIn) {
-                const diffTime = Math.abs(checkOut - checkIn);
+            if (checkIn && checkOut && new Date(checkOut) > new Date(checkIn)) {
+                const diffTime = Math.abs(new Date(checkOut) - new Date(checkIn));
                 const nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                 const total = nights * pricePerNight;
 
@@ -1084,7 +1153,6 @@
             const total = document.getElementById('totalPriceDisplay').innerText;
             const bkId = '#BK-' + Math.floor(100 + Math.random() * 900);
 
-            // Append to Admin Table
             const adminTbody = document.getElementById('adminTableBody');
             adminTbody.innerHTML += `
                 <tr>
@@ -1096,23 +1164,34 @@
                 </tr>
             `;
 
-            alert(`شكراً لك ${name}، تم إرسال طلب حجزك بنجاح (${bkId}). سيتم التواصل معك عبر الواتساب لتأكيد الدفع.`);
+            alert(`✅ شكراً لك ${name}، تم إرسال طلب حجزك بنجاح (${bkId}). سيتم التواصل معك عبر الواتساب لتأكيد الدفع.`);
             navigateTo('home');
         }
 
-        // WORKER TASK VIA WHATSAPP
+        // ------------------------------------------------------------
+        // 6. WORKER TASK VIA WHATSAPP
+        // ------------------------------------------------------------
         function sendWorkerTask() {
-            const phone = document.getElementById('taskWorkerPhone').value;
-            const desc = document.getElementById('taskDesc').value;
+            const phone = document.getElementById('taskWorkerPhone').value.trim();
+            const desc = document.getElementById('taskDesc').value.trim();
 
             if (!desc) {
-                alert('يرجى كتابة تفاصيل المهمة');
+                alert('⚠️ يرجى كتابة تفاصيل المهمة');
+                return;
+            }
+            if (!phone) {
+                alert('⚠️ يرجى إدخال رقم العامل');
                 return;
             }
 
             const msg = `📋 *مهمة جديدة - مزرعة ليوا صنرايز*\n\nالمهمة: ${desc}\nيرجى الإنجاز والتأكيد.`;
             window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`, '_blank');
         }
+
+        // تشغيل حساب السعر تلقائياً عند تغيير التواريخ
+        document.getElementById('checkIn')?.addEventListener('change', calcBookingTotal);
+        document.getElementById('checkOut')?.addEventListener('change', calcBookingTotal);
     </script>
+
 </body>
 </html>
